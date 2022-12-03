@@ -3,6 +3,7 @@ const process = require('process');
 const cp = require('child_process');
 const path = require('path');
 const run = require('./index');
+const {performance} = require('perf_hooks');
 
 describe('waiting test',function(){
 
@@ -20,6 +21,10 @@ describe('waiting test',function(){
 
   // shows how the runner will run a javascript action with env / stdout protocol
   test('test run function', async () => {
+    var t1 = performance.now();
+    var datetime = new Date();
+    var t2 = performance.now();
+    // date creation took t1 - t2 //more accurate than date, because date function takes time itself to run so dont take that time into account
     process.env['INPUT_MILLISECONDS'] = 100;
     await expect(run).not.toThrow('milliseconds not a number');
   })
